@@ -113,12 +113,14 @@ class Style {
   String? navBarTitleTxtColor;
   bool enableShowClientAvatar;
   bool enableSendVoiceMessage;
+  bool enablePhotoLibraryEdit;
 
   Style(
       {this.navBarBackgroundColor,
       this.navBarTitleTxtColor,
       this.enableShowClientAvatar = false,
-      this.enableSendVoiceMessage = true});
+      this.enableSendVoiceMessage = true,
+      this.enablePhotoLibraryEdit = true});
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> map = {
@@ -126,6 +128,7 @@ class Style {
       'navBarTitleTxtColor': navBarTitleTxtColor,
       'enableShowClientAvatar': enableShowClientAvatar,
       'enableSendVoiceMessage': enableSendVoiceMessage,
+      'enablePhotoLibraryEdit': enablePhotoLibraryEdit,
     };
     return map;
   }
