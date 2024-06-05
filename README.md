@@ -2,15 +2,15 @@
 
 [![Pub](https://img.shields.io/pub/v/meiqia_sdk_flutter.svg)](https://pub.dev/packages/meiqia_sdk_flutter)
 
-|         |            |
-|---------|------------|
-| Android | ✅         |
-| iOS     | ✅         |
+| Platform | support |
+|----------|---------|
+| Android  | ✅       |
+| iOS      | ✅       |
 
 ## 安装
 ``` dart
 dependencies:
-  meiqia_sdk_flutter: ^1.0.7
+  meiqia_sdk_flutter: ^1.0.8
 ```
 
 ## 使用美洽
