@@ -147,6 +147,8 @@ public class MeiqiaSdkFlutterPlugin implements FlutterPlugin, MethodCallHandler,
                 params.put("url", url);
                 channel.invokeMethod("onLinkClick", params);
             });
+        } else if (call.method.equals("closeMeiqiaService")) {
+            MQManager.getInstance(context).closeMeiqiaService();
         } else {
             result.notImplemented();
         }

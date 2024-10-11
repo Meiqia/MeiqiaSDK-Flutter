@@ -20,7 +20,8 @@ class MQManager {
   static const MethodChannel _channel = MethodChannel('meiqia_sdk_flutter');
 
   static Future<String?> init({required String appKey}) async {
-    final String? errorMsg = await _channel.invokeMethod('init', {'appKey': appKey});
+    final String? errorMsg =
+        await _channel.invokeMethod('init', {'appKey': appKey});
     return errorMsg;
   }
 
@@ -45,8 +46,8 @@ class MQManager {
       _channel.invokeMethod('setCustomizedId', {'customizedId': customizedId});
     }
     if (clientInfo != null) {
-      _channel.invokeMethod(
-          'setClientInfo', {'clientInfo': clientInfo.info, 'update': clientInfo.update});
+      _channel.invokeMethod('setClientInfo',
+          {'clientInfo': clientInfo.info, 'update': clientInfo.update});
     }
     if (scheduledAgent != null) {
       _channel.invokeMethod('setScheduledAgent', {'agentId': scheduledAgent});
@@ -55,10 +56,12 @@ class MQManager {
       _channel.invokeMethod('setScheduledGroup', {'groupId': scheduledGroup});
     }
     if (preSendTextMessage != null) {
-      _channel.invokeMethod('setPreSendTextMessage', {'text': preSendTextMessage});
+      _channel
+          .invokeMethod('setPreSendTextMessage', {'text': preSendTextMessage});
     }
     if (preSendProductCard != null) {
-      _channel.invokeMethod('setPreSendProductCardMessage', preSendProductCard.toMap());
+      _channel.invokeMethod(
+          'setPreSendProductCardMessage', preSendProductCard.toMap());
     }
     if (style != null) {
       _channel.invokeMethod('setStyle', style.toMap());
@@ -73,6 +76,11 @@ class MQManager {
   dismiss() {
     _channel.invokeMethod('dismiss');
   }
+
+  closeMeiqiaService() {
+    _channel.invokeMethod('closeMeiqiaService');
+  }
+
 }
 
 class ClientInfo {
