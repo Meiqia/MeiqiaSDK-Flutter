@@ -16,6 +16,7 @@ static NSString *const setPreSendProductCardMessage = @"setPreSendProductCardMes
 static NSString *const setOnLinkClickListener = @"setOnLinkClickListener";  //点击商品卡片的回调
 static NSString *const showChatViewController = @"show";  //跳转到聊天页面
 static NSString *const dismissChatViewController = @"dismiss";  //退出聊天页面
+static NSString *const closeMeiqiaService = @"closeMeiqiaService";  //主动断开 socket
 
 #pragma mark - 回调给flutter的方法
 
@@ -130,6 +131,8 @@ static NSString *const kSalesCount = @"salesCount";  // 销售量
         [self showMeiQiaChatView];
     } else if ([method isEqualToString:dismissChatViewController]) {
         [self dismissMeiQiaChatView];
+    } else if ([method isEqualToString:closeMeiqiaService]) {
+        [MQManager closeMeiqiaService];
     } else {
         result(FlutterMethodNotImplemented);
     }
