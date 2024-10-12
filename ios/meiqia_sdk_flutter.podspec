@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'meiqia_sdk_flutter'
-  s.version          = '1.0.6'
+  s.version          = '1.0.9'
   s.summary          = "美洽官方 SDK for iOS"
   s.description      = "美洽官方的 Flutter SDK"
   s.homepage         = 'https://github.com/Meiqia/MeiqiaSDK-Flutter'
@@ -14,7 +14,7 @@ Pod::Spec.new do |s|
   s.source_files = 'Classes/**/*'
   s.public_header_files = 'Classes/**/*.h'
   s.dependency 'Flutter'
-  s.dependency 'Meiqia', '>= 3.9.8'
+  s.dependency 'Meiqia', '>= 3.9.17'
   s.platform = :ios, '10.0'
 
   # Flutter.framework does not contain a i386 slice.
