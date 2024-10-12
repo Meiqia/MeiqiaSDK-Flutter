@@ -65,7 +65,8 @@ class _MyAppState extends State<MyApp> {
   _setClientInfo() {
     Map<String, String> info = {
       'name': '富坚义博',
-      'avatar': 'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
+      'avatar':
+          'https://s3.cn-north-1.amazonaws.com.cn/pics.meiqia.bucket/1dee88eabfbd7bd4',
       'gender': '男',
       'tel': '13888888888',
       '技能1': '休刊'
@@ -97,7 +98,8 @@ class _MyAppState extends State<MyApp> {
     // productCard 构造
     ProductCard productCard = ProductCard(
         title: '商品的标题',
-        pictureUrl: 'https://file.pisen.com.cn/QJW3C1000WEB/Product/201701/16305409655404.jpg',
+        pictureUrl:
+            'https://file.pisen.com.cn/QJW3C1000WEB/Product/201701/16305409655404.jpg',
         // 商品图片的链接
         description: '商品描述的内容',
         productUrl: 'https://meiqia.com',
@@ -110,7 +112,8 @@ class _MyAppState extends State<MyApp> {
         linkTapCallback: (url) {
           debugPrint('点击了商品卡片的链接: $url');
           // 跳转到 flutter 的指定页面
-          Navigator.push(context, MaterialPageRoute(builder: (context) => const SecondPage()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const SecondPage()));
           // 关闭对话页
           MQManager.instance.dismiss();
         });
@@ -145,17 +148,22 @@ class _MyAppState extends State<MyApp> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            SizedBox(width: 80, height: 80, child: Image.asset('assets/images/logo.png')),
+            SizedBox(
+                width: 80,
+                height: 80,
+                child: Image.asset('assets/images/logo.png')),
             const SizedBox(height: 80),
             if (_initState == InitState.empty)
               const Text('请先设置 appkey')
             else ...[
               if (_initState == InitState.initing) const Text('初始化中...'),
               if (_initState == InitState.fail)
-                ElevatedButton(onPressed: () => _initMeiqia(), child: const Text('重新初始化')),
+                ElevatedButton(
+                    onPressed: () => _initMeiqia(), child: const Text('重新初始化')),
               if (_initState == InitState.success)
                 ElevatedButton(
-                  onPressed: () => _initState == InitState.success ? _defaultChat() : null,
+                  onPressed: () =>
+                      _initState == InitState.success ? _defaultChat() : null,
                   child: const Text('咨询客服'),
                 )
             ]

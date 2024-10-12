@@ -80,7 +80,6 @@ class MQManager {
   closeMeiqiaService() {
     _channel.invokeMethod('closeMeiqiaService');
   }
-
 }
 
 class ClientInfo {
