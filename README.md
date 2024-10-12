@@ -10,7 +10,7 @@
 ## 安装
 ``` dart
 dependencies:
-  meiqia_sdk_flutter: ^1.0.8
+  meiqia_sdk_flutter: ^1.0.9
 ```
 
 ## 使用美洽
@@ -109,6 +109,12 @@ MQManager.instance.show(style: style);
 
 ``` dart
 MQManager.instance.dismiss();
+```
+
+> 关闭美洽服务
+
+``` dart
+MQManager.instance.closeMeiqiaService();
 ```
 
 ## 相关链接
