@@ -10,7 +10,7 @@
 ## 安装
 ``` dart
 dependencies:
-  meiqia_sdk_flutter: ^1.0.9
+  meiqia_sdk_flutter: ^1.1.0
 ```
 
 ## 使用美洽
@@ -98,6 +98,11 @@ MQManager.instance.show(linkTapCallback: (url) {
 Style style = Style(
     navBarBackgroundColor: '#ffffff', // 设置导航栏的背景色
     navBarTitleTxtColor: '#ffffff', // 设置导航栏上的 title 的颜色
+    incomingMsgTextColor: '#FF5733', // 设置接收到的消息文本的颜色
+    incomingBubbleColor: '#DAF7A6', // 设置接收到的消息气泡的颜色
+    outgoingMsgTextColor: '#3498DB', // 设置发送的消息文本的颜色
+    outgoingBubbleColor: '#FFC300', // 设置发送的消息气泡的颜色
+    backgroundColor: '#E8DAEF', // 设置聊天页面背景色
     enableShowClientAvatar: false, // 是否支持当前用户头像的显示
     enableSendVoiceMessage: true, // 是否支持发送语音消息
     enablePhotoLibraryEdit: false, // 是否支持相册选择图片可裁剪。默认支持裁剪
