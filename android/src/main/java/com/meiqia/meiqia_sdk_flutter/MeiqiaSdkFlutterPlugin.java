@@ -139,6 +139,12 @@ public class MeiqiaSdkFlutterPlugin implements FlutterPlugin, MethodCallHandler,
         } else if (call.method.equals("setStyle")) {
             MQConfig.ui.titleBackgroundColor = call.argument("navBarBackgroundColor");
             MQConfig.ui.titleTextColor = call.argument("navBarTitleTxtColor");
+            MQConfig.ui.leftChatTextColor = call.argument("incomingMsgTextColor");
+            MQConfig.ui.leftChatBubbleColor = call.argument("incomingBubbleColor");
+            MQConfig.ui.rightChatTextColor = call.argument("outgoingMsgTextColor");
+            MQConfig.ui.rightChatBubbleColor = call.argument("outgoingBubbleColor");
+            MQConfig.ui.backgroundColor = call.argument("backgroundColor");
+
             MQConfig.isShowClientAvatar = Boolean.TRUE.equals(call.argument("enableShowClientAvatar"));
             MQConfig.isVoiceSwitchOpen = Boolean.TRUE.equals(call.argument("enableSendVoiceMessage"));
         } else if (call.method.equals("setOnLinkClickListener")) {

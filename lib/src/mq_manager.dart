@@ -118,6 +118,11 @@ class ProductCard {
 class Style {
   String? navBarBackgroundColor;
   String? navBarTitleTxtColor;
+  String? incomingMsgTextColor;
+  String? incomingBubbleColor;
+  String? outgoingMsgTextColor;
+  String? outgoingBubbleColor;
+  String? backgroundColor;
   bool enableShowClientAvatar;
   bool enableSendVoiceMessage;
   bool enablePhotoLibraryEdit;
@@ -125,6 +130,11 @@ class Style {
   Style(
       {this.navBarBackgroundColor,
       this.navBarTitleTxtColor,
+      this.incomingMsgTextColor,
+      this.incomingBubbleColor,
+      this.outgoingMsgTextColor,
+      this.outgoingBubbleColor,
+      this.backgroundColor,
       this.enableShowClientAvatar = false,
       this.enableSendVoiceMessage = true,
       this.enablePhotoLibraryEdit = true});
@@ -133,6 +143,11 @@ class Style {
     Map<String, dynamic> map = {
       'navBarBackgroundColor': navBarBackgroundColor,
       'navBarTitleTxtColor': navBarTitleTxtColor,
+      'incomingMsgTextColor': incomingMsgTextColor,
+      'incomingBubbleColor': incomingBubbleColor,
+      'outgoingMsgTextColor': outgoingMsgTextColor,
+      'outgoingBubbleColor': outgoingBubbleColor,
+      'backgroundColor': backgroundColor,
       'enableShowClientAvatar': enableShowClientAvatar,
       'enableSendVoiceMessage': enableSendVoiceMessage,
       'enablePhotoLibraryEdit': enablePhotoLibraryEdit,
