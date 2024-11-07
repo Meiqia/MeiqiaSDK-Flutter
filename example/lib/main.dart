@@ -143,6 +143,12 @@ class _MyAppState extends State<MyApp> {
     });
   }
 
+  /// 获取未读消息
+  _getUnreadMessages() async {
+    final messages = await MQManager.instance.getUnreadMessages();
+    debugPrint('未读消息: $messages');
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

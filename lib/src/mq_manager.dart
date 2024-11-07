@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 
 typedef LinkTapCallback = void Function(String url);
 
+typedef MessageCallback = void Function(List<MQMessage> messages);
+
 class MQManager {
   static final MQManager instance = MQManager._internal();
 
@@ -80,6 +82,21 @@ class MQManager {
   closeMeiqiaService() {
     _channel.invokeMethod('closeMeiqiaService');
   }
+
+  /// 获取未读消息
+  /// [isOnlyMessageType] 是否只包含人工消息
+  Future<List<MQMessage>> getUnreadMessages(
+      {bool isOnlyMessageType = true, String? customizedId}) async {
+    final List<dynamic> messages = await _channel
+        .invokeMethod('getUnreadMessages', {'customizedId': customizedId});
+    List<MQMessage> list = messages
+        .map((e) => MQMessage.fromMap(Map<String, dynamic>.from(e as Map)))
+        .toList();
+    if (isOnlyMessageType) {
+      list = list.where((e) => e.type == 'message').toList();
+    }
+    return list;
+  }
 }
 
 class ClientInfo {
@@ -153,5 +170,29 @@ class Style {
       'enablePhotoLibraryEdit': enablePhotoLibraryEdit,
     };
     return map;
+  }
+}
+
+class MQMessage {
+  String content = '';
+  String contentType = '';
+  int conversationId = 0;
+  int createdOn = 0;
+  int enterpriseId = 0;
+  String fromType = '';
+  int id = 0;
+  String trackId = '';
+  String type = '';
+
+  MQMessage.fromMap(Map<String, dynamic> map) {
+    content = map['content'];
+    contentType = map['content_type'];
+    conversationId = map['conversation_id'];
+    createdOn = map['created_on'];
+    enterpriseId = map['enterprise_id'];
+    fromType = map['from_type'];
+    id = map['id'];
+    trackId = map['track_id'];
+    type = map['type'];
   }
 }

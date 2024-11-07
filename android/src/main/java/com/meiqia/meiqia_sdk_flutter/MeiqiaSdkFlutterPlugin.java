@@ -4,22 +4,21 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.meiqia.core.MQManager;
+import com.meiqia.core.bean.MQMessage;
+import com.meiqia.core.callback.OnGetMessageListCallback;
 import com.meiqia.core.callback.OnInitCallback;
 import com.meiqia.meiqiasdk.activity.MQConversationActivity;
 import com.meiqia.meiqiasdk.callback.MQSimpleActivityLifecyleCallback;
-import com.meiqia.meiqiasdk.callback.OnLinkClickCallback;
 import com.meiqia.meiqiasdk.util.MQConfig;
 import com.meiqia.meiqiasdk.util.MQIntentBuilder;
 
-import org.json.JSONObject;
-
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import io.flutter.embedding.engine.plugins.FlutterPlugin;
@@ -155,6 +154,39 @@ public class MeiqiaSdkFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             });
         } else if (call.method.equals("closeMeiqiaService")) {
             MQManager.getInstance(context).closeMeiqiaService();
+        } else if (call.method.equals("getUnreadMessages")) {
+            OnGetMessageListCallback callback = new OnGetMessageListCallback() {
+                @Override
+                public void onSuccess(List<MQMessage> list) {
+                    List<Map<String, Object>> resultList = new ArrayList<>();
+                    for (int i = 0; i < list.size(); i++) {
+                        MQMessage mqMessage = list.get(i);
+                        Map<String, Object> message = new HashMap<>();
+                        message.put("content", mqMessage.getContent());
+                        message.put("content_type", mqMessage.getContent_type());
+                        message.put("conversation_id", mqMessage.getConversation_id());
+                        message.put("created_on", mqMessage.getCreated_on());
+                        message.put("enterprise_id", mqMessage.getEnterprise_id());
+                        message.put("from_type", mqMessage.getFrom_type());
+                        message.put("id", mqMessage.getId());
+                        message.put("track_id", mqMessage.getTrack_id());
+                        message.put("type", mqMessage.getType());
+                        resultList.add(message);
+                    }
+                    result.success(resultList);
+                }
+
+                @Override
+                public void onFailure(int i, String s) {
+                    result.success(new ArrayList<>());
+                }
+            };
+            String customizedId = call.argument("customizedId");
+            if (TextUtils.isEmpty(customizedId)) {
+                MQManager.getInstance(context).getUnreadMessages(callback);
+            } else {
+                MQManager.getInstance(context).getUnreadMessages(customizedId, callback);
+            }
         } else {
             result.notImplemented();
         }
