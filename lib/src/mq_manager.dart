@@ -178,7 +178,6 @@ class MQMessage {
   String contentType = '';
   int conversationId = 0;
   int createdOn = 0;
-  int enterpriseId = 0;
   String fromType = '';
   int id = 0;
   String trackId = '';
@@ -189,7 +188,6 @@ class MQMessage {
     contentType = map['content_type'];
     conversationId = map['conversation_id'];
     createdOn = map['created_on'];
-    enterpriseId = map['enterprise_id'];
     fromType = map['from_type'];
     id = map['id'];
     trackId = map['track_id'];

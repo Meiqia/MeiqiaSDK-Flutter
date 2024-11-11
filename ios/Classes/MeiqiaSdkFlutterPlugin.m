@@ -17,6 +17,7 @@ static NSString *const setOnLinkClickListener = @"setOnLinkClickListener";  //�
 static NSString *const showChatViewController = @"show";  //跳转到聊天页面
 static NSString *const dismissChatViewController = @"dismiss";  //退出聊天页面
 static NSString *const closeMeiqiaService = @"closeMeiqiaService";  //主动断开 socket
+static NSString *const getUnreadMessages = @"getUnreadMessages";  //获取未读消息
 
 #pragma mark - 回调给flutter的方法
 
@@ -133,6 +134,13 @@ static NSString *const kSalesCount = @"salesCount";  // 销售量
         [self dismissMeiQiaChatView];
     } else if ([method isEqualToString:closeMeiqiaService]) {
         [MQManager closeMeiqiaService];
+    } else if ([method isEqualToString:getUnreadMessages]) {
+        if ([argument objectForKey:kCustomizedId] && ![[argument objectForKey:kCustomizedId] isEqual:[NSNull null]]) {
+            NSString *customizedId = argument[kCustomizedId];
+            [self getUnreadMessages:customizedId result:(FlutterResult)result]  ;
+        } else {
+            [self getUnreadMessages:nil result:(FlutterResult)result];
+        }
     } else {
         result(FlutterMethodNotImplemented);
     }
@@ -350,6 +358,62 @@ static NSString *const kSalesCount = @"salesCount";  // 销售量
         [weakSelf.channel invokeMethod:onLinkClick arguments:@{kUrl: productUrl}];
     }];
 }
+
+/**
+ *  获取未读消息
+ */
+- (void)getUnreadMessages:(NSString *)customizedId result:(FlutterResult)result {
+    if (customizedId && ![customizedId isEqual:[NSNull null]]) {
+        // 获取指定 customizedId 的未读消息
+        [MQManager getUnreadMessagesWithCustomizedId:customizedId completion:^(NSArray *messages, NSError *error) {
+            if(error) {
+                result(@[]);
+            } else {
+                NSMutableArray *arr = [NSMutableArray array];
+                for (MQMessage *msg in messages) {
+                    NSMutableDictionary *msgDict = [[msg toDBMapping] mutableCopy];
+                    [self handleMQMessage:msgDict];
+                    [arr addObject:msgDict];
+                }
+                result(arr);
+            }
+        }];
+    } else {
+        // 获取所有未读消息
+        [MQManager getUnreadMessagesWithCompletion:^(NSArray *messages, NSError *error) {
+            if(error) {
+                result(@[]);
+            } else {
+                NSMutableArray *arr = [NSMutableArray array];
+                for (MQMessage *msg in messages) {
+                    NSMutableDictionary *msgDict = [[msg toDBMapping] mutableCopy];
+                    [self handleMQMessage:msgDict];
+                    [arr addObject:msgDict];
+                }
+                result(arr);
+            }
+        }];
+    }
+}
+
+/**
+ * 处理美洽消息的时间戳格式
+ * @param createdOnValue 原始的created_on值
+ * @return 处理后的NSNumber类型时间戳
+ */
+- (void)handleMQMessage:(NSMutableDictionary *)msgDict {
+    NSString *createdOnStr = [msgDict[@"created_on"] stringValue];
+    // 移除最后3位
+    createdOnStr = [createdOnStr substringToIndex:[createdOnStr length] - 3];
+    // 移除小数点
+    createdOnStr = [createdOnStr stringByReplacingOccurrencesOfString:@"." withString:@""];
+    // 消息 id 是字符串，这里应该转成 NSNumber
+    msgDict[@"id"] = [NSNumber numberWithLongLong:[msgDict[@"id"] longLongValue]];
+    [msgDict setObject:[NSNumber numberWithLongLong:[createdOnStr longLongValue]] forKey:@"created_on"];
+    // conversation_id 是字符串，这里应该转成 NSNumber
+    msgDict[@"conversation_id"] = [NSNumber numberWithLongLong:[msgDict[@"conversation_id"] longLongValue]];
+}
+
 
 #pragma mark - AppDelegate
 
