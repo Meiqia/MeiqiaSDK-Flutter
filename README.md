@@ -10,7 +10,7 @@
 ## 安装
 ``` dart
 dependencies:
-  meiqia_sdk_flutter: ^1.1.0
+  meiqia_sdk_flutter: ^1.1.1
 ```
 
 ## 使用美洽
@@ -120,6 +120,12 @@ MQManager.instance.dismiss();
 
 ``` dart
 MQManager.instance.closeMeiqiaService();
+```
+
+> 获取未读消息（退出界面后收到的消息，都将算作未读消息）
+
+``` dart
+final messages = await MQManager.instance.getUnreadMessages();
 ```
 
 ## 相关链接
