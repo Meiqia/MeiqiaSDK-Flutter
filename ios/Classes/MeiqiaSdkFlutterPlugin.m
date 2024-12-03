@@ -402,16 +402,30 @@ static NSString *const kSalesCount = @"salesCount";  // 销售量
  * @return 处理后的NSNumber类型时间戳
  */
 - (void)handleMQMessage:(NSMutableDictionary *)msgDict {
-    NSString *createdOnStr = [msgDict[@"created_on"] stringValue];
-    // 移除最后3位
-    createdOnStr = [createdOnStr substringToIndex:[createdOnStr length] - 3];
-    // 移除小数点
-    createdOnStr = [createdOnStr stringByReplacingOccurrencesOfString:@"." withString:@""];
-    // 消息 id 是字符串，这里应该转成 NSNumber
-    msgDict[@"id"] = [NSNumber numberWithLongLong:[msgDict[@"id"] longLongValue]];
-    [msgDict setObject:[NSNumber numberWithLongLong:[createdOnStr longLongValue]] forKey:@"created_on"];
+    @try {
+         NSString *createdOnStr = [msgDict[@"created_on"] stringValue];
+        // 移除最后3位
+        createdOnStr = [createdOnStr substringToIndex:[createdOnStr length] - 3];
+        // 移除小数点
+        createdOnStr = [createdOnStr stringByReplacingOccurrencesOfString:@"." withString:@""];
+        [msgDict setObject:[NSNumber numberWithLongLong:[createdOnStr longLongValue]] forKey:@"created_on"];
+    } @catch (NSException *exception) {
+        [msgDict setObject:@0 forKey:@"created_on"]; // 默认值
+    }
+
+     // 消息 id 是字符串，这里应该转成 NSNumber
+    @try {
+        msgDict[@"id"] = [NSNumber numberWithLongLong:[msgDict[@"id"] longLongValue]];
+    } @catch (NSException *exception) {
+        msgDict[@"id"] = @0; // 默认值
+    }
+
     // conversation_id 是字符串，这里应该转成 NSNumber
-    msgDict[@"conversation_id"] = [NSNumber numberWithLongLong:[msgDict[@"conversation_id"] longLongValue]];
+    @try {
+        msgDict[@"conversation_id"] = [NSNumber numberWithLongLong:[msgDict[@"conversation_id"] longLongValue]];
+    } @catch (NSException *exception) {
+        msgDict[@"conversation_id"] = @0; // 默认值
+    }
 }
 
 
