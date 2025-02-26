@@ -38,9 +38,6 @@ android {
 
 dependencies {
     implementation 'com.meiqia:androidx:4.0.20'
-    implementation 'com.squareup.okhttp3:okhttp:4.9.1'
     implementation 'com.github.bumptech.glide:glide:4.13.2'
-    implementation 'org.bouncycastle:bcprov-jdk15on:1.70' // BouncyCastle
-    implementation 'org.conscrypt:conscrypt-android:2.5.1' // Conscrypt
     annotationProcessor 'com.github.bumptech.glide:compiler:4.13.2'
 }
