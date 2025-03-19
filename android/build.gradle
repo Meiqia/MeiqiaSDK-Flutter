@@ -22,6 +22,8 @@ rootProject.allprojects {
 apply plugin: 'com.android.library'
 
 android {
+
+    namespace 'com.meiqia.meiqia_sdk_flutter'
     compileSdkVersion 33
 
     compileOptions {
