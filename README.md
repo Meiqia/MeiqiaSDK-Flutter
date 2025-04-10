@@ -10,7 +10,7 @@
 ## 安装
 ``` dart
 dependencies:
-  meiqia_sdk_flutter: ^1.1.4
+  meiqia_sdk_flutter: ^1.1.5
 ```
 
 ## 使用美洽
@@ -63,6 +63,15 @@ MQManager.instance.show(scheduledAgent: agentId );
 ``` dart
 // groupId 可以从工作台查询
 MQManager.instance.show(scheduledGroup: groupId);
+```
+
+> 设置分配规则
+
+``` dart
+/// MQScheduleRule.redirectEnterprise 默认，指定分配客服不在线，分配给企业随机一个人，分配失败，则发送留言
+/// MQScheduleRule.redirectGroup 指定分配客服不在线，分配给组内的人，分配失败，则发送留言
+/// MQScheduleRule.redirectNone 指定分配客服不在线，则发送留言
+MQManager.instance.show(scheduleRule: MQScheduleRule.redirectEnterprise);
 ```
 
 > 设置预发送消息
