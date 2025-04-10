@@ -8,6 +8,7 @@ import android.text.TextUtils;
 import androidx.annotation.NonNull;
 
 import com.meiqia.core.MQManager;
+import com.meiqia.core.MQScheduleRule;
 import com.meiqia.core.bean.MQMessage;
 import com.meiqia.core.callback.OnGetMessageListCallback;
 import com.meiqia.core.callback.OnInitCallback;
@@ -48,6 +49,7 @@ public class MeiqiaSdkFlutterPlugin implements FlutterPlugin, MethodCallHandler,
     private String groupId;
     private String preSendText;
     private Bundle preSendProductCard;
+    private MQScheduleRule scheduleRule = MQScheduleRule.REDIRECT_ENTERPRISE;
 
     @Override
     public void onAttachedToEngine(@NonNull FlutterPluginBinding flutterPluginBinding) {
@@ -101,6 +103,7 @@ public class MeiqiaSdkFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             }
             intentBuilder.setScheduledAgent(agentId);
             intentBuilder.setScheduledGroup(groupId);
+            intentBuilder.setScheduleRule(scheduleRule);
             intentBuilder.setPreSendTextMessage(preSendText);
             intentBuilder.setPreSendProductCardMessage(preSendProductCard);
             Intent intent = intentBuilder.build();
@@ -115,6 +118,9 @@ public class MeiqiaSdkFlutterPlugin implements FlutterPlugin, MethodCallHandler,
             agentId = call.argument("agentId");
         } else if (call.method.equals("setScheduledGroup")) {
             groupId = call.argument("groupId");
+        } else if (call.method.equals("setScheduleRule")) {
+            int value = call.argument("rule");
+            scheduleRule = MQScheduleRule.fromValue(value);
         } else if (call.method.equals("setPreSendTextMessage")) {
             preSendText = call.argument("text");
         } else if (call.method.equals("setPreSendProductCardMessage")) {

@@ -6,6 +6,25 @@ typedef LinkTapCallback = void Function(String url);
 
 typedef MessageCallback = void Function(List<MQMessage> messages);
 
+enum MQScheduleRule {
+  redirectNone,
+  redirectGroup,
+  redirectEnterprise,
+}
+
+extension MQScheduleRuleExt on MQScheduleRule {
+  int get value {
+    switch (this) {
+      case MQScheduleRule.redirectNone:
+        return 1;
+      case MQScheduleRule.redirectGroup:
+        return 2;
+      case MQScheduleRule.redirectEnterprise:
+        return 3;
+    }
+  }
+}
+
 class MQManager {
   static final MQManager instance = MQManager._internal();
 
@@ -39,6 +58,7 @@ class MQManager {
     ClientInfo? clientInfo,
     String? scheduledAgent,
     String? scheduledGroup,
+    MQScheduleRule? scheduleRule,
     String? preSendTextMessage,
     ProductCard? preSendProductCard,
     Style? style,
@@ -56,6 +76,9 @@ class MQManager {
     }
     if (scheduledGroup != null) {
       _channel.invokeMethod('setScheduledGroup', {'groupId': scheduledGroup});
+    }
+    if (scheduleRule != null) {
+      _channel.invokeMethod('setScheduleRule', {'rule': scheduleRule.value});
     }
     if (preSendTextMessage != null) {
       _channel

@@ -10,6 +10,7 @@ static NSString *const setClientInfo = @"setClientInfo";  //设置顾客的自�
 static NSString *const configChatViewStyle = @"setStyle";  //美洽UI样式的配置
 static NSString *const setScheduledAgentId = @"setScheduledAgent";  //设置分配给指定的客服id
 static NSString *const setScheduledGroupId = @"setScheduledGroup";  //设置分配给指定的客服组id
+static NSString *const setScheduleRule = @"setScheduleRule";  //设置分配规则
 static NSString *const setLoginCustomizedId = @"setCustomizedId";  //设置登录客服的开发者自定义id
 static NSString *const setPreSendTextMessage = @"setPreSendTextMessage";  //设置预发送的文本信息
 static NSString *const setPreSendProductCardMessage = @"setPreSendProductCardMessage";  //设置预发送的商品卡片信息
@@ -29,6 +30,7 @@ static NSString *const kAppKey = @"appKey";  //appkey
 static NSString *const kCustomizedId = @"customizedId";  //顾客的自定义id
 static NSString *const kAgentId = @"agentId";  //客服id
 static NSString *const kGroupId = @"groupId";  //客服组id
+static NSString *const kRule = @"rule";  //分配规则
 static NSString *const kText = @"text";  //预发送的文本字段
 static NSString *const kProductCard = @"productCard";  //预发送的商品卡片信息
 static NSString *const kStyle = @"style";  //UI样式的配置
@@ -113,6 +115,11 @@ static NSString *const kSalesCount = @"salesCount";  // 销售量
         if ([argument objectForKey:kGroupId] && ![[argument objectForKey:kGroupId] isEqual:[NSNull null]]) {
             NSString *groupId = argument[kGroupId];
             [self setScheduledGroupId:groupId];
+        }
+    } else if ([method isEqualToString:setScheduleRule]) {
+        if ([argument objectForKey:kRule] && ![[argument objectForKey:kRule] isEqual:[NSNull null]]) {
+            NSNumber *ruleNumber = argument[kRule];
+            [self setScheduleRule:[ruleNumber intValue]];
         }
     } else if ([method isEqualToString:setLoginCustomizedId]) {
         if ([argument objectForKey:kCustomizedId] && ![[argument objectForKey:kCustomizedId] isEqual:[NSNull null]]) {
@@ -293,6 +300,15 @@ static NSString *const kSalesCount = @"salesCount";  // 销售量
  */
 - (void)setScheduledGroupId:(NSString *)groupId {
     [self.chatViewManager setScheduledGroupId:groupId];
+}
+
+/**
+ *  设置分配规则
+ *
+ *  @param rule 分配规则
+ */
+- (void)setScheduleRule:(int)rule {
+    [self.chatViewManager setScheduleLogicWithRule:(MQChatScheduleRules)rule];
 }
 
 /**
