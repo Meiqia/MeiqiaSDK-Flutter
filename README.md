@@ -10,7 +10,7 @@
 ## 安装
 ``` dart
 dependencies:
-  meiqia_sdk_flutter: ^1.1.8
+  meiqia_sdk_flutter: ^1.1.9
 ```
 
 ## 使用美洽
